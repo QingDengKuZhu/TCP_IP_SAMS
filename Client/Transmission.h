@@ -15,21 +15,21 @@ SOCKET ConnectServer(u_long nServerAddr, int nPort);
 
 //关闭连接.
 //sd: 已连接的套接字句柄.
-//若成功,返回TRUE;否者返回FALSE.
-BOOL ShutdownConnection(SOCKET sd);
+//若成功,返回1;否者返回0.
+int ShutdownConnection(SOCKET sd);
 
 //完整发送数据.
 //sd: 已连接套接字
 //data: 待发送数据的地址
 //len: 数据大小
-//若成功发送,返回TRUE;否者返回FALSE.
-BOOL CompleteSend(SOCKET sd, const char *data, int len);
+//若成功发送,返回1;否者返回0.
+int CompleteSend(SOCKET sd, const char *data, int len);
 
 //完整接收数据.
 //sd : 已连接套接字
 //buffer : 接收数据的缓冲区地址
 //len :"数据大小
-//若成功接收,返回true;否者返回FALSE.
-BOOL CompleteRecv(SOCKET sd, char *buffer, int len);
+//若成功接收,返回1;否者返回0.
+int CompleteRecv(SOCKET sd, char *buffer, int len);
 
 #endif
