@@ -1,18 +1,18 @@
-#ifndef INPUT_H
+ï»¿#ifndef INPUT_H
 #define INPUT_H
 
 #include <stddef.h>
 
-//·µ»ØÂú×ãÌõ¼şµÄ·ÖÊı(0<=·ÖÊı<=maxnumber)
+//è¿”å›æ»¡è¶³æ¡ä»¶çš„åˆ†æ•°(0<=åˆ†æ•°<=maxnumber)
 unsigned int NumberInput(const char notice[], const unsigned int maxnumber);
 
-//½«Âú×ãÌõ¼ş(³¤¶ÈÎªlen)µÄÕÊºÅÊäÈëµ½accountÖĞ.
+//å°†æ»¡è¶³æ¡ä»¶(é•¿åº¦ä¸ºlen)çš„å¸å·è¾“å…¥åˆ°accountä¸­.
 void AccountInput(char account[], const char notice[], const size_t len);
 
-//½«Âú×ãÌõ¼ş(³¤¶ÈÎªlen)µÄÃÜÂë±£´æÔÚpasswordÖĞ
+//å°†æ»¡è¶³æ¡ä»¶(é•¿åº¦ä¸ºlen)çš„å¯†ç ä¿å­˜åœ¨passwordä¸­
 void PasswordInput(char password[], const char notcie[], const size_t len);
 
-//½«Âú×ãÌõ¼şµÄÊäÈë(³¤¶ÈÎªlen)´æ´¢ÔÚIDÖĞ.
+//å°†æ»¡è¶³æ¡ä»¶çš„è¾“å…¥(é•¿åº¦ä¸ºlen)å­˜å‚¨åœ¨IDä¸­.
 void IDInput(char ID[], const char notice[], const size_t len);
 
 #endif

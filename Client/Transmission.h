@@ -1,35 +1,35 @@
-#ifndef TRANSMISSION_H
+ï»¿#ifndef TRANSMISSION_H
 #define TRANSMISSION_H
 
 #include <WinSock2.h>
 #include <stdio.h>
 
-#define  BUFFER_SIZE		SO_MAX_MSG_SIZE	//»º³åÇø´óÐ¡
-#define  DEF_PORT			10000			//Ä¬ÈÏ¶Ë¿ÚºÅ
+#define  BUFFER_SIZE		SO_MAX_MSG_SIZE	//ç¼“å†²åŒºå¤§å°
+#define  DEF_PORT			10000			//é»˜è®¤ç«¯å£å·
 
-//Á¬½Ó·þÎñÆ÷.
-//nServerAddr: ºÏ·¨µÄ·þÎñÆ÷µØÖ·(Ö÷»úµØÖ·).
-//nPort: ºÏ·¨µÄ¶Ë¿ÚºÅ(Ö÷»úµØÖ·).
-//Èô³É¹¦,·µ»ØÁ¬½Ó¾ä±ú ·ñÕß,·µ»ØINVALID_SOCKET.
+//è¿žæŽ¥æœåŠ¡å™¨.
+//nServerAddr: åˆæ³•çš„æœåŠ¡å™¨åœ°å€(ä¸»æœºåœ°å€).
+//nPort: åˆæ³•çš„ç«¯å£å·(ä¸»æœºåœ°å€).
+//è‹¥æˆåŠŸ,è¿”å›žè¿žæŽ¥å¥æŸ„ å¦è€…,è¿”å›žINVALID_SOCKET.
 SOCKET ConnectServer(u_long nServerAddr, int nPort);
 
-//¹Ø±ÕÁ¬½Ó.
-//sd: ÒÑÁ¬½ÓµÄÌ×½Ó×Ö¾ä±ú.
-//Èô³É¹¦,·µ»ØTRUE;·ñÕß·µ»ØFALSE.
+//å…³é—­è¿žæŽ¥.
+//sd: å·²è¿žæŽ¥çš„å¥—æŽ¥å­—å¥æŸ„.
+//è‹¥æˆåŠŸ,è¿”å›žTRUE;å¦è€…è¿”å›žFALSE.
 BOOL ShutdownConnection(SOCKET sd);
 
-//ÍêÕû·¢ËÍÊý¾Ý.
-//sd: ÒÑÁ¬½ÓÌ×½Ó×Ö
-//data: ´ý·¢ËÍÊý¾ÝµÄµØÖ·
-//len: Êý¾Ý´óÐ¡
-//Èô³É¹¦·¢ËÍ,·µ»ØTRUE;·ñÕß·µ»ØFALSE.
+//å®Œæ•´å‘é€æ•°æ®.
+//sd: å·²è¿žæŽ¥å¥—æŽ¥å­—
+//data: å¾…å‘é€æ•°æ®çš„åœ°å€
+//len: æ•°æ®å¤§å°
+//è‹¥æˆåŠŸå‘é€,è¿”å›žTRUE;å¦è€…è¿”å›žFALSE.
 BOOL CompleteSend(SOCKET sd, const char *data, int len);
 
-//ÍêÕû½ÓÊÕÊý¾Ý.
-//sd : ÒÑÁ¬½ÓÌ×½Ó×Ö
-//buffer : ½ÓÊÕÊý¾ÝµÄ»º³åÇøµØÖ·
-//len :"Êý¾Ý´óÐ¡
-//Èô³É¹¦½ÓÊÕ,·µ»Øtrue;·ñÕß·µ»ØFALSE.
+//å®Œæ•´æŽ¥æ”¶æ•°æ®.
+//sd : å·²è¿žæŽ¥å¥—æŽ¥å­—
+//buffer : æŽ¥æ”¶æ•°æ®çš„ç¼“å†²åŒºåœ°å€
+//len :"æ•°æ®å¤§å°
+//è‹¥æˆåŠŸæŽ¥æ”¶,è¿”å›žtrue;å¦è€…è¿”å›žFALSE.
 BOOL CompleteRecv(SOCKET sd, char *buffer, int len);
 
 #endif
