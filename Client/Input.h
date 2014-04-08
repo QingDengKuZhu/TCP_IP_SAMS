@@ -15,4 +15,7 @@ void PasswordInput(char password[], const char notcie[], const size_t len);
 //将满足条件的输入(长度为len)存储在ID中.
 void IDInput(char ID[], const char notice[], const size_t len);
 
+//判断字符串是全是数字字符住组成.若是返回1,否者返回0.
+int IsDigit(const char *str, const size_t len);
+
 #endif
