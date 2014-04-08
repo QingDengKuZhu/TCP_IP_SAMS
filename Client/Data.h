@@ -16,7 +16,9 @@ typedef struct stutent
 	unsigned int chinese;	//语文成绩
 	unsigned int math;	//数学成绩
 	unsigned int english;	//英语成绩
-	unsigned int science;	//理综成绩
+	unsigned int physics;	//物理成绩
+	unsigned int chemistry;//化学成绩
+	unsigned int biology;	//生物成绩
 
 	unsigned int total;	//总分
 	double	ave;			//平均分
