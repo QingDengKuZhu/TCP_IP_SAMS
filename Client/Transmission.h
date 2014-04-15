@@ -3,6 +3,7 @@
 
 #include <WinSock2.h>
 #include <stdio.h>
+#include "Data.h"
 
 #define  BUFFER_SIZE		SO_MAX_MSG_SIZE	//缓冲区大小
 #define  DEF_PORT			10000			//默认端口号
@@ -31,5 +32,13 @@ int CompleteSend(SOCKET sd, const char *data, int len);
 //len :"数据大小
 //若成功接收,返回1;否者返回0.
 int CompleteRecv(SOCKET sd, char *buffer, int len);
+
+//将接收到的缓冲区中的数据转换成STUDENT格式的数据
+void BuffertoData(char *pstudent, const char buffer[], size_t stlen);
+
+//将STUDENT的数据转换以便传输
+void DataToBuffer(char buffer[], const char *pstudent, size_t stlen);
+
+
 
 #endif

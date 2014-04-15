@@ -75,16 +75,15 @@ void StudentUI(SOCKET sd)
 {
 	char sendmessage[2] = {'S', '\0'};
 	char buffer[sizeof(STUDENT)];//接受学生成绩信息
-//	STUDENT student;
+	STUDENT student;
 
 	system("cls");
 	printf("学生成绩管理系统--学生\n");
 	CompleteSend(sd, sendmessage, 2);
-	CompleteRecv(sd, buffer, sizeof(STUDENT));
-	//student = (STUDENT)buffer;如何转换
+	CompleteRecv(sd, buffer, sizeof(STUDENT)/sizeof(char));
+	BuffertoData((char *)&student, buffer, sizeof(student)/sizeof(char));//转换
 	PrintHead();
-	
-//	PrintData();
+	PrintData(&student);
 
 	return;
 }

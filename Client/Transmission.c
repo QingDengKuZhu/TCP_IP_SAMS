@@ -114,3 +114,25 @@ BOOL CompleteRecv(SOCKET sd, char *buffer, int len)
 
 	return 1;
 }
+
+void BuffertoData(char *pstudent, const char buffer[], size_t stlen)
+{
+	size_t i;
+	for (i=0; i<stlen; ++i)
+	{
+		*(pstudent+i) = buffer[i];
+	}
+
+	return;
+}
+
+void DataToBuffer(char buffer[], const char *pstudent, size_t stlen)
+{
+	size_t i;
+	for (i=0; i<stlen; ++i)
+	{
+		buffer[i] = *(pstudent+i);
+	}
+
+	return;
+}
