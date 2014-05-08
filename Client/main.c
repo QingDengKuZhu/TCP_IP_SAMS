@@ -21,7 +21,7 @@ int main(void)
 		return EXIT_FAILURE;
 	}
 
-	while (TRUE)
+	while (1)
 	{
 		//连接服务器
 		SOCKET sd = ConnectServer(nServerAddr, nPort);
