@@ -12,7 +12,7 @@ int main(void)
 	/*初始化Winsock库*/
 	WSADATA wsa_data = {0};
 	
-	if (SOCKET_ERROR ==WSAStartup(MAKEWORD(2, 2), &wsa_data))
+	if (SOCKET_ERROR == WSAStartup(MAKEWORD(2, 2), &wsa_data))
 	{
 		printf("WSAStartup error : %d \n", WSAGetLastError());
 		return EXIT_FAILURE;

@@ -1,5 +1,6 @@
 ﻿#include "Transmission.h"
 #include <stdio.h>
+#include "Data.h"
 
 SOCKET BindListen(void)
 {
@@ -12,9 +13,9 @@ SOCKET BindListen(void)
 		return INVALID_SOCKET;
 	}
 
-	/************************************************************************/
-	/* 填充本地套接字地址                                                                     */
-	/************************************************************************/
+	/*
+	** 填充本地套接字地址
+	*/
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(DEF_PORT);
 	serv_addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
@@ -24,9 +25,9 @@ SOCKET BindListen(void)
 		return INVALID_SOCKET;
 	}
 
-	/************************************************************************/
-	/* 开始监听(将其设置为监听状态)                                                                     */
-	/************************************************************************/
+	/*
+	** 开始监听(将其设置为监听状态)
+	*/
 	if (SOCKET_ERROR == listen(hListenSock, SOMAXCONN))
 	{
 		printf("listen error : %d\n", WSAGetLastError());
@@ -78,9 +79,9 @@ int ShutdownConnection(SOCKET hClientSocket)
 		}
 	} while (0 != result);
 
-	/************************************************************************/
-	/* 关闭套接字                                                                     */
-	/************************************************************************/
+	/*
+	** 关闭套接字 
+	*/
 	if (SOCKET_ERROR == closesocket(hClientSocket))
 	{
 		printf("closesock error : %d\n", WSAGetLastError());
@@ -100,21 +101,22 @@ int ProcessConnection(SOCKET hClientSocket)
 
 void DoWork(void)
 {
-	SOCKET hListenSocket;
-	SOCKET hClientSocket;
-
+	SOCKET hListenSocket;	/*监听套接字*/
+	SOCKET hClientSocket;	/*已连接套接字*/
+	
+	
 	hListenSocket =  BindListen();
-
 	if (INVALID_SOCKET == hListenSocket)
 	{
 		return;
 	}
+	
 	printf("Server is Running...\n");
 
 	while (1)
 	{
 		/************************************************************************/
-		/* 第一阶段,接受一个客户端连接                                                                     */
+		/* 第一阶段,接受一个客户端连接                                            */
 		/************************************************************************/
 		hClientSocket = AccepctConnection(hListenSocket);
 		if (INVALID_SOCKET == hClientSocket)
@@ -123,7 +125,7 @@ void DoWork(void)
 		}
 
 		/************************************************************************/
-		/* 第二阶段,服务一个客户端连接                                                                     */
+		/* 第二阶段,服务一个客户端连接                                            */
 		/************************************************************************/
 		if (-1 == ProcessConnection(hClientSocket))
 		{
@@ -131,7 +133,7 @@ void DoWork(void)
 		}
 
 		/************************************************************************/
-		/* 第三阶段, 关闭一个客户端连接                                                                     */
+		/* 第三阶段, 关闭一个客户端连接                                           */
 		/************************************************************************/
 		if (-1 == ShutdownConnection(hClientSocket))
 		{
