@@ -2,8 +2,9 @@
 #include "Function.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int IsAccount(const long int account, const long int password)
+int IsAccount(const char account[], const char password[])
 {
 	ACCOUNT *p = NULL;
 	FILE *pf = NULL;		/*文件指针*/
@@ -35,9 +36,9 @@ int IsAccount(const long int account, const long int password)
 		*/
 		if ( 1 == fread(p, sizeof(NODE), 1, pf))
 		{
-			if (account == p->account )/*帐号存在*/
+			if (0 == strcmp(account, p->account))/*帐号存在*/
 			{
-				if (password == p->password)/*密码正确,返回帐号类型*/
+				if (0 == strcmp(password, p->password))/*密码正确,返回帐号类型*/
 				{
 					return p->Type;
 				}
