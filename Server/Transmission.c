@@ -1,6 +1,7 @@
 ﻿#include "Transmission.h"
 #include <stdio.h>
 #include "Data.h"
+#include "Function.h"
 
 SOCKET BindListen(void)
 {
@@ -96,6 +97,28 @@ int ShutdownConnection(SOCKET hClientSocket)
 
 int ProcessConnection(SOCKET hClientSocket)
 {
+	char account[ACCOUNT_LEN];		/*存储帐号*/
+	char password[PASSWORD_LEN];	/*存储密码*/
+	char result;						
+	if(0 == 	CompleteRecv(hClientSocket, account, ACCOUNT_LEN))
+	{
+		printf("数据接收失败!\n");
+		return -1;
+	}
+
+	if (0 == CompleteRecv(hClientSocket, password, PASSWORD_LEN))
+	{
+		printf("数据接收失败!\n");
+		return -1;
+	}
+
+	//printf("account:%s\n password: %s\n", account, password);测试
+	result = 'a'-1 + IsAccount(account, password);
+	if (0 == CompleteSend(hClientSocket, &result, 1))//发送查询结果
+	{
+		printf("数据接收失败!\n");
+		return -1;
+	}
 	return 0;
 }
 
@@ -152,4 +175,54 @@ void DoWork(void)
 	printf("成功关闭服务器端!\n");
 
 	return;
+}
+
+int CompleteSend(SOCKET sd, const char *data, int len)
+{
+	int idex = 0;
+
+	while (idex < len)
+	{
+		int nTemp = send(sd, data+idex, len-idex, 0);
+		if (nTemp > 0)
+		{
+			idex += nTemp;
+		}
+		else
+		{
+			printf("send error : %d\n", WSAGetLastError());
+			return 0;
+		}
+	}
+
+	return 1;	//当传入的len为0时,将执行此语句
+}
+
+int CompleteRecv(SOCKET sd, char *buffer, int len)
+{
+	int idex = 0;
+
+	while (idex < len)
+	{
+		int nTemp = recv(sd, buffer+idex, len-idex, 0);
+		if (nTemp == SOCKET_ERROR)
+		{
+			printf("recv error : %d\n", WSAGetLastError());
+
+			return 0;
+		}
+		else if (nTemp > 0)
+		{
+			idex += nTemp;
+		}
+		else
+		{
+			printf("Connection closed unexpectedly by peer.\n");
+
+			return 1;
+		}
+	}
+
+	//当传入的len为0时,将执行此语句
+	return 1;
 }
