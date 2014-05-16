@@ -25,48 +25,65 @@ void WelcomeUI(SOCKET sd)
 {
 	char account[ACCOUNT_LEN];	//存储帐号
 	char password[PASSWORD_LEN];	//密码长度
-	char buffer[ACCOUNT_LEN + PASSWORD_LEN + 1];//传输数据缓冲区
+	char buffer;//接收从服务器返回的帐号密码查询结果.
 
 	system("cls");//清屏
 	gotoxy(25, 5);
 	printf( "欢迎来到学生成绩管理系统(V 1.0)\n" );
 	gotoxy(10, 6);
 	printf("-----------------------------------------------------\n");
-	AccountInput(account, "请输入帐号: ", sizeof(account)/sizeof(char)-1);	//输入帐号
-	PasswordInput(password, "请输入密码: " ,sizeof(password)/sizeof(char)-1);	//输入密码
-	strcpy(buffer, account);
-	strcat(buffer, password);//刚好填满(包括'\0')
+	AccountInput(account, "请输入帐号: ", ACCOUNT_LEN);	//输入帐号
+	PasswordInput(password, "请输入密码: " ,PASSWORD_LEN);	//输入密码
 
 	//将帐号和密码发送到服务器进行验证
-	if (0 == CompleteSend(sd, buffer, sizeof(buffer)/sizeof(char)))
+	if (0 == CompleteSend(sd, account, ACCOUNT_LEN) || 0 == CompleteSend(sd, password, PASSWORD_LEN))
 	{
 		printf("传输数据失败!\n");
 		return;
 	}
 	
-	//接收帐号密码查询结果:返回两个char值buffer[0]表示密码帐号是否正确('Y':正确, 'N':错误),buffer[1]表示帐号类型('S':学生, 'T':老师)
-	if (0 == CompleteRecv(sd, buffer, 2))
+	//接收帐号密码查询结果:返回1个char值,a表示学生帐号;b表示教师帐号;c表示密码错误但是帐号存在,d表示帐号不存在.
+	if (0 == CompleteRecv(sd, &buffer, 1))
 	{
 		printf("传输数据失败!\n");
 		return;
 	}
 	
-	//判断密码帐号是否正确
-	if ('Y' != buffer[0])
+	//根据服务器返回的结果，判断帐号密码
+
+	switch (buffer)
 	{
-		printf("密码帐号错误!\n");
-		return;
+	case 'a'://学生帐号
+		StudentUI(sd);
+		break;
+	case 'b'://教师帐号
+		//	TeacherUI(sd);
+		break;
+	case 'c'://密码错误
+		printf("密码错误！\n");
+		break;
+	case 'd'://帐号不存在
+		printf("帐号密码不存在！\n");
+		break;
 	}
 
+
+	//判断密码帐号是否正确
+//	if ('Y' != buffer[0])
+//	{
+//		printf("密码帐号错误!\n");
+//		return;
+//	}
+
 	//判断帐号类型
-	if ('S' == buffer[1])
-	{
-		StudentUI(sd);
-	}
-	else if ('T' == buffer[1])
-	{
+//	if ('S' == buffer[1])
+//	{
+//		StudentUI(sd);
+//	}
+//	else if ('T' == buffer[1])
+//	{
 	//	TeacherUI(sd);
-	}
+//	}
 
 	return;
 }
