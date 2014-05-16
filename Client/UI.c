@@ -5,8 +5,8 @@
 #include <windows.h>	//COORD
 #include "Transmission.h"
 
-#define		ACCOUNT_LEN	9	//帐号长度
-#define		PASSWORD_LEN	9	//密码长度
+#define		ACCOUNT_LEN	10	//帐号长度
+#define		PASSWORD_LEN	10	//密码长度
 
 
 
@@ -23,8 +23,8 @@ void gotoxy(short x, short y)
 
 void WelcomeUI(SOCKET sd)
 {
-	char account[ACCOUNT_LEN + 1];	//存储帐号
-	char password[PASSWORD_LEN +1];	//密码长度
+	char account[ACCOUNT_LEN];	//存储帐号
+	char password[PASSWORD_LEN];	//密码长度
 	char buffer[ACCOUNT_LEN + PASSWORD_LEN + 1];//传输数据缓冲区
 
 	system("cls");//清屏

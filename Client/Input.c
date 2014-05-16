@@ -32,13 +32,13 @@ void AccountInput(char account[], const char notice[], const size_t len)
 	{
 		printf(notice);
 		scanf("%s", t);
-		if (strlen(t) != len)
+		if (strlen(t) != len-1)
 		{
-			printf("\n帐号需要%d位!!!\n", len);
+			printf("\n帐号需要%d位!!!\n", len-1);
 		}
-	} while (strlen(t) != len);
+	} while (strlen(t) != len-1);
 
-	strcpy(account, t);//account[len] = '\0'
+	strcpy(account, t);//该操作执行完成后,account[len-1] = '\0'
 	
 	return;
 }
@@ -50,13 +50,13 @@ void PasswordInput(char password[], const char notice[], const size_t len)
 	{
 		printf(notice);
 		scanf("%s", t);
-		if (strlen(t) != len)
+		if (strlen(t) != len-1)
 		{
-			printf("\n密码需要%d位!!!\n", len);
+			printf("\n密码需要%d位!!!\n", len-1);
 		}
-	} while (strlen(t) != len);
+	} while (strlen(t) != len-1);
 
-	strcpy(password, t);//account[len] = '\0'
+	strcpy(password, t);//该操作完成以后,password[len-1] = '\0'
 
 	return;
 }
@@ -68,13 +68,13 @@ void IDInput(char ID[], const char notice[], const size_t len)
 	{
 		printf(notice);
 		scanf("%s", t);
-		if (strlen(t) != len  || IsDigit(t, len)==0 )
+		if (strlen(t) != len-1  || IsDigit(t, len-1)==0 )
 		{
-			printf("\n密码需要%d位!!!\n", len);
+			printf("\n密码需要%d位,且必须全部以数字组成!!!\n", len-1);
 		}
-	} while (strlen(t) != len|| IsDigit(t, len)==0);
+	} while (strlen(t) != len-1|| IsDigit(t, len-1)==0);
 
-	strcpy(ID, t);//account[len] = '\0'
+	strcpy(ID, t);//该操作完成以后,ID[len-1] = '\0'
 
 	return;
 }

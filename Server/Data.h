@@ -7,8 +7,8 @@
 
 #define  PASSWORDPATH	"PASSWORD"
 #define	DATAPATH		"DATAPATH"
-#define		ACCOUNT_LEN	9	//帐号长度
-#define		PASSWORD_LEN	9	//密码长度
+#define		ACCOUNT_LEN	10	//帐号长度,包括末尾的'\0'
+#define		PASSWORD_LEN	10	//密码长度,包括末尾的'\0'
 
 
 //学生数据结构
@@ -32,8 +32,8 @@ typedef struct Stutent
 typedef struct Account
 {
 	int Type;	/*帐号类型, 1表示学生帐号,2表示教师帐号*/
-	char account[ACCOUNT_LEN + 1];	/*学生帐号就是学号,+1是因为末尾'\0'*/
-	char password[PASSWORD_LEN + 1];
+	char account[ACCOUNT_LEN];	/*学生帐号就是学号,*/
+	char password[PASSWORD_LEN];
 }ACCOUNT;
 
 /*
