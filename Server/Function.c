@@ -49,14 +49,10 @@ int IsAccount(const char account[], const char password[])
 					return 3;
 				}
 			}
-			else	/*帐号不存在*/
-			{
-				fclose(pf);	/*关闭文件*/
-				return 4;
-			}
 		}
 	}
-
+	
+	/*帐号不存在*/
 	fclose(pf);	/*关闭文件*/
 	return 4;
 }
