@@ -119,6 +119,19 @@ int ProcessConnection(SOCKET hClientSocket)
 		printf("数据接收失败!\n");
 		return -1;
 	}
+
+	//根据不同的帐号类型执行相应的操作
+	switch (result)
+	{
+	case 'a':
+		Student(hClientSocket, account);
+		break;
+	case 'b':
+		//Teacher(hClientSocket);
+		break;
+	default:
+		break;
+	}
 	return 0;
 }
 
@@ -225,4 +238,26 @@ int CompleteRecv(SOCKET sd, char *buffer, int len)
 
 	//当传入的len为0时,将执行此语句
 	return 1;
+}
+
+void BuffertoData(char *pstudent, const char buffer[], size_t stlen)
+{
+	size_t i;
+	for (i=0; i<stlen; ++i)
+	{
+		*(pstudent+i) = buffer[i];
+	}
+
+	return;
+}
+
+void DataToBuffer(char buffer[], const char *pstudent, size_t stlen)
+{
+	size_t i;
+	for (i=0; i<stlen; ++i)
+	{
+		buffer[i] = *(pstudent+i);
+	}
+
+	return;
 }
