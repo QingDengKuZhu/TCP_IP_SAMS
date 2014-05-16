@@ -44,12 +44,12 @@ int IsAccount(const char account[], const char password[])
 				}
 				else	/*密码错误*/
 				{
-					return 4;
+					return 3;
 				}
 			}
 			else	/*帐号不存在*/
 			{
-				return 5;
+				return 4;
 			}
 		}
 	}
