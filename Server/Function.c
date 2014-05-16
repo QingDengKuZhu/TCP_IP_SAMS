@@ -55,5 +55,5 @@ int IsAccount(const char account[], const char password[])
 	}
 
 	fclose(pf);	/*关闭文件*/
-	return 5;
+	return 4;
 }
