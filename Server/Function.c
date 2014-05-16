@@ -40,15 +40,18 @@ int IsAccount(const char account[], const char password[])
 			{
 				if (0 == strcmp(password, p->password))/*密码正确,返回帐号类型*/
 				{
+					fclose(pf);	/*关闭文件*/
 					return p->Type;
 				}
 				else	/*密码错误*/
 				{
+					fclose(pf);	/*关闭文件*/
 					return 3;
 				}
 			}
 			else	/*帐号不存在*/
 			{
+				fclose(pf);	/*关闭文件*/
 				return 4;
 			}
 		}
