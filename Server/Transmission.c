@@ -99,7 +99,7 @@ int ProcessConnection(SOCKET hClientSocket)
 {
 	char account[ACCOUNT_LEN];		/*存储帐号*/
 	char password[PASSWORD_LEN];	/*存储密码*/
-	char result;						
+	char result;					/*存储待发送查询结果*/
 	if(0 == 	CompleteRecv(hClientSocket, account, ACCOUNT_LEN))
 	{
 		printf("数据接收失败!\n");
@@ -112,8 +112,10 @@ int ProcessConnection(SOCKET hClientSocket)
 		return -1;
 	}
 
-	//printf("account:%s\n password: %s\n", account, password);测试
+	printf("接收:account:%s\npassword: %s\n", account, password);//测试
 	result = 'a'-1 + IsAccount(account, password);
+	printf("result = %c\n", result);	//测试
+
 	if (0 == CompleteSend(hClientSocket, &result, 1))//发送查询结果
 	{
 		printf("数据接收失败!\n");
@@ -124,10 +126,10 @@ int ProcessConnection(SOCKET hClientSocket)
 	switch (result)
 	{
 	case 'a':
-		Student(hClientSocket, account);
+		printf("进入学生控制");//Student(hClientSocket, account);
 		break;
 	case 'b':
-		//Teacher(hClientSocket);
+		printf("进入教师控制");	//Teacher(hClientSocket);
 		break;
 	default:
 		break;
