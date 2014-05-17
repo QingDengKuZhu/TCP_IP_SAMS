@@ -39,11 +39,20 @@ typedef struct Account
 /*
 **链表结构
 */
-typedef struct Node
+typedef struct Node_s
 {
 	STUDENT data;
 	struct Node *pnext;
 
+}NODE_S, LINK_S;
+
+
+typedef struct Node
+{
+	ACCOUNT data;
+	struct Node *pnext;
+
 }NODE, LINK;
+
 
 #endif
