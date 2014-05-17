@@ -30,4 +30,6 @@ void TeacherUI(SOCKET sd);
 */
 void StudentUI(SOCKET sd);
 
+//菜单项
+void Menu(void);
 #endif

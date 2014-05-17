@@ -58,13 +58,16 @@ void WelcomeUI(SOCKET sd)
 		getchar();
 		break;
 	case 'b'://教师帐号
-		printf("进入教师界面");//	TeacherUI(sd);
+		TeacherUI(sd);//printf("进入教师界面");
+		getchar();
 		break;
 	case 'c'://密码错误
 		printf("密码错误！按回车返回欢迎界面\n");
+		getchar();
 		break;
 	case 'd'://帐号不存在
 		printf("帐号密码不存在！按回车返回欢迎界面\n");
+		getchar();
 		break;
 	}
 	
@@ -80,12 +83,98 @@ void StudentUI(SOCKET sd)
 	printf("学生成绩管理系统--学生\n");
 	if(1==CompleteRecv(sd, buffer, sizeof(STUDENT)))
 	{
-		printf("接收成功!\n");
+//		printf("接收成功!\n");
 	}
 	BuffertoData((char *)&student, buffer, sizeof(STUDENT)/sizeof(char));//转换
 	//PrintHead();
 	PrintData(&student);
 	
 	getchar();
+	return;
+}
+
+void TeacherUI(SOCKET sd)
+{
+	int select;
+	char send;
+	char rec;
+	Menu();
+
+	while (1)
+	{
+		printf("请输入您的选择:");
+		scanf("%d", &select);
+
+		switch (select)
+		{
+		case 1:
+			send = 'b';
+			CompleteSend(sd, &send, 1);
+			Add(sd);
+			CompleteRecv(sd, &rec, 1);
+			if (rec =='Y')
+			{
+				printf("添加成功\n");
+			}
+			else
+			{
+				printf("添加失败!\n");
+			}
+			break;
+		case 2:
+			send = 'c';
+			CompleteSend(sd, &send, 1);
+			Del(sd);
+			CompleteRecv(sd, &rec, 1);
+			if (rec =='Y')
+			{
+				printf("删除成功\n");
+			}
+			else
+			{
+				printf("删除失败!\n");
+			}
+			break;
+		case 3:
+			send = 'a';
+			CompleteSend(sd, &send, 1);
+			ClientFromServer(sd);
+			break;
+		case 4:
+			send = 'd';
+			CompleteSend(sd, &send ,1);
+			Modify(sd);
+			CompleteRecv(sd, &rec, 1);
+			if (rec =='Y')
+			{
+				printf("修改成功\n");
+			}
+			else
+			{
+				printf("修改失败!\n");
+			}
+		default:
+			break;;
+		}
+	}
+	return;
+}
+
+void Menu(void)
+{
+	system("cls");
+	gotoxy(10, 5);			/*在文本窗口中设置光标*/
+	printf("		学生成绩管理系统--教师\n");
+	gotoxy(10, 8);
+	printf("-------------------------------Menu-------------------------------\n");
+	gotoxy(10, 9);
+	printf("|	1 添加数据			2 删除数据	   |\n");
+	gotoxy(10, 10);
+	printf("|	3 显示数据			4 修改数据	   |\n");
+	gotoxy(10, 11);
+	printf("|	5 按总成绩降序排列			6 统计数据	   |\n");
+	gotoxy(10, 14);
+	printf("-------------------------------------------------------------------\n");
+
 	return;
 }

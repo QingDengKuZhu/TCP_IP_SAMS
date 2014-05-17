@@ -17,4 +17,16 @@ void	Teacher(SOCKET hClientSocket);
 void DestroyList(LINK **ppL);
 
 void DestroyList_s(LINK_S **ppL);
+
+//将单链表的内容发送到客户端
+void ServerToClient(SOCKET hClientSocket, LINK_S *pL);
+
+//添加成绩记录.成功返回1,否则为0;
+int AddData(SOCKET hclientSocket, LINK_S *pL);
+
+//删除成绩记录,成功和返回1,否者返回0;
+int DelData(SOCKET hclientSocket, LINK_S *pL);
+
+//修改成绩记录
+int ModifyData(SOCKET hclientSocket, LINK_S *pL);
 #endif

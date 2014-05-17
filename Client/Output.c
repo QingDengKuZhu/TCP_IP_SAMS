@@ -13,7 +13,7 @@ void PrintHead(void)
 }
 
 void PrintData(STUDENT *pdata)
-{ 
+{
 	printf("ID : %s ", pdata->ID);
 	printf("name:%s ", pdata->name);
 	printf("chinese : %d ", pdata->chinese);

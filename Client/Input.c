@@ -15,12 +15,12 @@ unsigned int NumberInput(const char notice[], const unsigned int maxnumber)
 		fflush(stdin);
 
 		//判断分数是否在合理的范围内
-		if (t>100 || t<0 || n!=1)
+		if (t>maxnumber || t<0 || n!=1)
 		{
 			printf("\n分数需要在[0,100]范围内!!!\n");
 		}
 
-	} while (t>100 || t<0 || n!=1);
+	} while (t>maxnumber || t<0 || n!=1);
 
 	return t;
 }
@@ -91,4 +91,20 @@ int IsDigit(const char *str, const size_t len)
 		}
 	}
 	return 1;
+}
+
+void NameInput(char account[], const char notice[], const size_t maxlen)
+{
+	char t[256];
+	do 
+	{
+		printf(notice);
+		scanf("%s", t);
+		if (strlen(t) > maxlen-1)
+		{
+			printf("\n姓名最多%d位!!!\n", maxlen-1);
+		}
+	} while (strlen(t) > maxlen-1);
+
+	strcpy(account, t);//该操作执行完成后,account[len-1] = '\0'
 }

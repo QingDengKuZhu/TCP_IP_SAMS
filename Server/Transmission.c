@@ -112,9 +112,9 @@ int ProcessConnection(SOCKET hClientSocket)
 		return -1;
 	}
 
-	printf("接收:account:%s\npassword: %s\n", account, password);//测试
+//	printf("接收:account:%s\npassword: %s\n", account, password);//测试
 	result = 'a'-1 + IsAccount(account, password);
-	printf("result = %c\n", result);	//测试
+//	printf("result = %c\n", result);	//测试
 
 	if (0 == CompleteSend(hClientSocket, &result, 1))//发送查询结果
 	{
@@ -129,7 +129,7 @@ int ProcessConnection(SOCKET hClientSocket)
 		Student(hClientSocket, account);//学生权限操作
 		break;
 	case 'b':
-		printf("进入教师控制");	//Teacher(hClientSocket);
+		Teacher(hClientSocket);//教师权限操作
 		break;
 	default:
 		break;

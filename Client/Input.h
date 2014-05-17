@@ -18,4 +18,6 @@ void IDInput(char ID[], const char notice[], const size_t len);
 //判断字符串是全是数字字符住组成.若是返回1,否者返回0.
 int IsDigit(const char *str, const size_t len);
 
+//名字长度最大为maxlen;
+void NameInput(char account[], const char notice[], const size_t maxlen);
 #endif

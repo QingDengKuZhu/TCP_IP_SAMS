@@ -39,6 +39,12 @@ void BuffertoData(char *pstudent, const char buffer[], size_t stlen);
 //将STUDENT的数据转换以便传输
 void DataToBuffer(char buffer[], const char *pstudent, size_t stlen);
 
+//从服务器接收大量STUDENT类型数据并显示出来.
+void ClientFromServer(SOCKET sd);
 
+void Add(SOCKET sd);
 
+void Del(SOCKET sd);
+
+void Modify(SOCKET sd);
 #endif

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <WinSock2.h>
+#include "Output.h"
+#include "Input.h"
 
 SOCKET ConnectServer(u_long nServerAddr, int nPort)
 {
@@ -135,4 +137,92 @@ void DataToBuffer(char buffer[], const char *pstudent, size_t stlen)
 	}
 
 	return;
+}
+
+void ClientFromServer(SOCKET sd)
+{
+	char buffer[sizeof(STUDENT)];//接受学生成绩信息
+	STUDENT student;
+	char *studentend = "000000000";
+	int i = 0;
+	while (1)
+	{
+		if(1==CompleteRecv(sd, buffer, sizeof(STUDENT)))
+		{
+			++i;//		printf("接收成功!\n");
+		}
+		BuffertoData((char *)&student, buffer, sizeof(STUDENT)/sizeof(char));//转换
+		if (0 == strcmp(student.ID, studentend))
+		{
+			break;
+		}
+		printf("调用PrintfData函数\n");
+		PrintData(&student);
+
+	}
+	printf("接收了&d次\n", i);
+	getchar();
+	return;
+
+}
+
+//添加数据
+void Add(SOCKET sd)
+{
+	STUDENT data;
+	char buffer[sizeof(STUDENT)];
+
+	IDInput(data.ID, "ID: ", 10);
+	NameInput(data.name, "name: ", 15);
+	data.chinese = NumberInput("chinese: ", 100);
+	data.math = NumberInput("math: ", 100);
+	data.english = NumberInput("english: ", 100);
+	data.physics = NumberInput("physics: ", 100);
+	data.chemistry = NumberInput("chemistry: ", 100);
+	data.biology = NumberInput("biology: ", 100);
+	data.total = data.chinese+data.math+data.english+data.physics+data.chemistry+data.biology;
+
+	DataToBuffer(buffer, (const char*)&data, sizeof(STUDENT)/sizeof(char));
+	if(0 == CompleteSend(sd, buffer, sizeof(STUDENT)))
+	{
+		printf("传输失败!\n");
+	}
+	return;
+}
+
+void Del(SOCKET sd)
+{
+	char ID[10];
+	IDInput(ID, "待删除ID:", 10);
+	if(0 == CompleteSend(sd, ID, 10))
+	{
+		printf("传输失败!\n");
+	}
+
+	return;
+}
+
+void Modify(SOCKET sd)
+{
+	STUDENT data;
+	char buffer[sizeof(STUDENT)];
+
+	IDInput(data.ID, "带修改学生ID: ", 10);
+//	NameInput(data.name, "name: ", 15);
+	strcpy(data.name, "abc");
+	data.chinese = NumberInput("chinese: ", 100);
+	data.math = NumberInput("math: ", 100);
+	data.english = NumberInput("english: ", 100);
+	data.physics = NumberInput("physics: ", 100);
+	data.chemistry = NumberInput("chemistry: ", 100);
+	data.biology = NumberInput("biology: ", 100);
+	data.total = data.chinese+data.math+data.english+data.physics+data.chemistry+data.biology;
+
+	DataToBuffer(buffer, (const char*)&data, sizeof(STUDENT)/sizeof(char));
+	if(0 == CompleteSend(sd, buffer, sizeof(STUDENT)))
+	{
+		printf("传输失败!\n");
+	}
+	return;
+
 }
