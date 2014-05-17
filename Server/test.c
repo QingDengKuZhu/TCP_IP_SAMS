@@ -25,7 +25,25 @@ void Show(LINK * pL)
 	return;
 }
 
+void Show_Data(LINK_S *pL)
+{
+	NODE_S *p = pL->pnext;
+	if (!p)
+	{
+		printf("无成绩记录\n");
+	}
+	else
+	{
+		printf("成绩为:\n");
+		while (p)
+		{
+			printf("ID:%s  name:%s\nchinese:%d, math:%d, english:%d, physics:%d, chemistry:%d, biology:%d, total:%d\n", p->data.ID, p->data.name, p->data.chinese, p->data.math, p->data.english, p->data.physics, p->data.chemistry, p->data.biology, p->data.total);
+			p = p->pnext;
+		}
+	}
 
+	return;
+}
 void AccountInput(char account[], const char notice[], const size_t len)
 {
 	char t[256];

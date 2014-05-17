@@ -15,4 +15,6 @@ void	Teacher(SOCKET hClientSocket);
 
 //删除单链表
 void DestroyList(LINK **ppL);
+
+void DestroyList_s(LINK_S **ppL);
 #endif

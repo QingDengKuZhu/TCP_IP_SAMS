@@ -126,7 +126,7 @@ int ProcessConnection(SOCKET hClientSocket)
 	switch (result)
 	{
 	case 'a':
-		printf("进入学生控制");//Student(hClientSocket, account);
+		Student(hClientSocket, account);//学生权限操作
 		break;
 	case 'b':
 		printf("进入教师控制");	//Teacher(hClientSocket);

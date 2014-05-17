@@ -54,53 +54,38 @@ void WelcomeUI(SOCKET sd)
 	switch (buffer)
 	{
 	case 'a'://学生帐号
-		StudentUI(sd);
+		StudentUI(sd);//进入学生界面
+		getchar();
 		break;
 	case 'b'://教师帐号
-		//	TeacherUI(sd);
+		printf("进入教师界面");//	TeacherUI(sd);
 		break;
 	case 'c'://密码错误
-		printf("密码错误！\n");
+		printf("密码错误！按回车返回欢迎界面\n");
 		break;
 	case 'd'://帐号不存在
-		printf("帐号密码不存在！\n");
+		printf("帐号密码不存在！按回车返回欢迎界面\n");
 		break;
 	}
-
-
-	//判断密码帐号是否正确
-//	if ('Y' != buffer[0])
-//	{
-//		printf("密码帐号错误!\n");
-//		return;
-//	}
-
-	//判断帐号类型
-//	if ('S' == buffer[1])
-//	{
-//		StudentUI(sd);
-//	}
-//	else if ('T' == buffer[1])
-//	{
-	//	TeacherUI(sd);
-//	}
-
+	
 	return;
 }
 
 void StudentUI(SOCKET sd)
 {
-	char sendmessage[2] = {'S', '\0'};
 	char buffer[sizeof(STUDENT)];//接受学生成绩信息
 	STUDENT student;
 
 	system("cls");
 	printf("学生成绩管理系统--学生\n");
-	CompleteSend(sd, sendmessage, 2);
-	CompleteRecv(sd, buffer, sizeof(STUDENT)/sizeof(char));
-	BuffertoData((char *)&student, buffer, sizeof(student)/sizeof(char));//转换
-	PrintHead();
+	if(1==CompleteRecv(sd, buffer, sizeof(STUDENT)))
+	{
+		printf("接收成功!\n");
+	}
+	BuffertoData((char *)&student, buffer, sizeof(STUDENT)/sizeof(char));//转换
+	//PrintHead();
 	PrintData(&student);
-
+	
+	getchar();
 	return;
 }

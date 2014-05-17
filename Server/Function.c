@@ -116,62 +116,87 @@ int IsAccount(const char account[], const char password[])
 
 void Student(SOCKET hClientSocket,const char account[])
 {
-	STUDENT *p = NULL;
-	FILE *pf = NULL;		/*文件指针*/
-	char buffer[sizeof(STUDENT)];
-
-	p = (STUDENT *)malloc(sizeof(STUDENT));
-	if (!p)
+	LINK_S *pL = NULL;		/*单链表头指针*/	
+	FILE *pf = NULL;			/*文件指针*/
+	int count = 0;			/*保存文件中的学生条数*/
+	NODE_S *p = NULL;			/*结点指针*/
+	NODE_S *r = NULL;			/*指向尾结点,若链表为空,则等于头指针*/
+	char buffer[sizeof(STUDENT)];//存储待发送学生数据.
+	/*
+	**初始化单链表,生成头结点.
+	*/
+	pL = (NODE_S *)malloc(sizeof(NODE_S));
+	if (!pL)
 	{
 		printf("头结点分配失败!\n");
 		exit(EXIT_FAILURE);
 	}
+	else
+	{
+		pL->pnext = NULL;
+		r = pL;
+	}
+
 	/*
-	** 以追加的方式打开一个二进制文件,可读可写,若文件不存在,则创建文件
+	**以追加的方式打开一个二进制文件
+	**可读可写,若文件不存在,则创建文
+	**件.
 	*/
-	pf = fopen(DATAPATH, "ab+");//最后必须修改为只读模式
+	pf = fopen(DATAPATH, "ab+");
 	if (!pf)
 	{
-		printf("文件打开错误!\n");
+		printf("文件打开错误");
 		exit(EXIT_FAILURE);
 	}
 	
+
 	/*
-	** 读入数据
+	**读入数据
 	*/
 	while (0 == feof(pf))	/*若文件未读到尾部*/
 	{
+		p = (NODE_S *)malloc(sizeof(NODE_S));
+		if (!p)
+		{
+			printf("待复制数据结点生成失败!\n");
+			exit(EXIT_FAILURE);
+		}
 		
 		/*
-		** 一次从文件中读取一条学生记录
+		**一次从文件中读取一条学生记录
 		*/
-		if ( 1 == fread(p, sizeof(NODE), 1, pf))
+		if ( 1 == fread(p, sizeof(NODE_S), 1, pf) )
 		{
-			if (0 == strcmp(account, p->ID))/*帐号存在*/
-			{
-				DataToBuffer(buffer, (const char *)p, sizeof(STUDENT));
-				CompleteSend(hClientSocket, buffer, sizeof(STUDENT));
-				
-				fclose(pf);
-				return;
-			}
+			p->pnext = NULL;
+			r->pnext = p;
+			r = p;
+			++count;	/*文件记录加一*/
 		}
+
 	}
 
-	strcpy(p->ID, account);
-	p->biology = 0;
-	p->chemistry = 0;
-	p->chinese = 0;
-	p->physics = 0;
-	strcpy(p->name, '\0');
-	p->total = 0;
-	p->english = 0;
-	p->math = 0;
-
-	DataToBuffer(buffer, (const char *)p, sizeof(STUDENT));
-	CompleteSend(hClientSocket, buffer, sizeof(STUDENT));
+	fclose(pf);/*关闭文件*/
 	
-	fclose(pf);
+//	Show_Data(pL);//测试
+	printf("文件成功打开,当前记录共%d条\n", count);
+
+	p = pL->pnext;
+	while (p)
+	{
+		if (0 == strcmp(p->data.ID, account))
+		{
+			printf("找到数据...\n");
+			DataToBuffer(buffer, (const char*)&(p->data), sizeof(STUDENT)/sizeof(char));
+			break;
+		}
+		p = p->pnext;
+	}
+	if(1 == CompleteSend(hClientSocket, buffer, sizeof(STUDENT)))
+	{
+		printf("传输成功!\n");
+	}
+	//测试
+	CompleteRecv(hClientSocket, buffer, 1);//仅仅接收反馈信息,无用.
 	return;
 }
 
@@ -179,6 +204,23 @@ void DestroyList(LINK **ppL)
 {
 	/*函数参数不能是LINKLIST * pL, 因为这样会导致pL不能修改,而在本函数中,头指针最后必须为NULL.*/
 	NODE *q = NULL;
+
+	while (*ppL)
+	{
+		q = (*ppL)->pnext;
+		free(*ppL);
+		*ppL = q;
+	}/*退出while()循环时, *ppL一定为NULL.*/
+
+	/*不需要再设定(*ppL)为空,因为此时*ppL已经为NULL,这是与ClearList()的区别.*/
+	printf("删除链表!\n");
+	return;
+}
+
+void DestroyList_s(LINK_S **ppL)
+{
+	/*函数参数不能是LINK_S *pL, 因为这样会导致pL不能修改,而在本函数中,头指针最后必须为NULL.*/
+	NODE_S *q = NULL;
 
 	while (*ppL)
 	{

@@ -14,14 +14,15 @@ void PrintHead(void)
 
 void PrintData(STUDENT *pdata)
 { 
-	printf("%s", pdata->ID);
-	printf("%s", pdata->name);
-	printf("%d", pdata->chinese);
-	printf("%d", pdata->math);
-	printf("%d", pdata->english);
-	printf("%d", pdata->physics);
-	printf("%d", pdata->chemistry);
-	printf("%d", pdata->biology);
+	printf("ID : %s ", pdata->ID);
+	printf("name:%s ", pdata->name);
+	printf("chinese : %d ", pdata->chinese);
+	printf("math : %d ", pdata->math);
+	printf("english : %d ", pdata->english);
+	printf("physics : %d ", pdata->physics);
+	printf("chemistry : %d", pdata->chemistry);
+	printf("biology : %d", pdata->biology);
+	printf("total : %d", pdata->total);
 	printf("\n");
 	
 	return;

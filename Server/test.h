@@ -6,6 +6,8 @@
 
 void Show(LINK *pL);
 
+void Show_Data(LINK_S *pL);
+
 void Add(LINK *pL);
 
 void Save(LINK *pL);

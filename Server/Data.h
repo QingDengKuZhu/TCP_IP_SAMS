@@ -6,7 +6,7 @@
 #define DATA_H
 
 #define  PASSWORDPATH	"PASSWORD"
-#define	DATAPATH		"DATAPATH"
+#define	DATAPATH		"DATA"
 #define		ACCOUNT_LEN	10	//帐号长度,包括末尾的'\0'
 #define		PASSWORD_LEN	10	//密码长度,包括末尾的'\0'
 
@@ -42,7 +42,7 @@ typedef struct Account
 typedef struct Node_s
 {
 	STUDENT data;
-	struct Node *pnext;
+	struct Node_s *pnext;
 
 }NODE_S, LINK_S;
 

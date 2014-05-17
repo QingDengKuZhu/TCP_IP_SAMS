@@ -86,7 +86,7 @@ int CompleteSend(SOCKET sd, const char *data, int len)
 	return 1;	//当传入的len为0时,将执行此语句
 }
 
-BOOL CompleteRecv(SOCKET sd, char *buffer, int len)
+int CompleteRecv(SOCKET sd, char *buffer, int len)
 {
 	int idex = 0;
 
