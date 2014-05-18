@@ -562,7 +562,7 @@ void Tongji(SOCKET hclientSocket, LINK_S *pL)
 	TJMESSAGE tjmessage;//统计信息
 	char buffer[sizeof(TJMESSAGE)];//待发送缓冲区
 	
-	pc = pm = pe = pp = pch = pb = r;
+	pt = pc = pm = pe = pp = pch = pb = r;
 	while (r)
 	{
 		if (r->data.chinese < 60)
@@ -598,23 +598,23 @@ void Tongji(SOCKET hclientSocket, LINK_S *pL)
 		{
 			pm = r;
 		}
-		if (r->data.english >= pc->data.english )
+		if (r->data.english >= pe->data.english )
 		{
 			pe = r;
 		}
-		if (r->data.physics >= pc->data.physics )
+		if (r->data.physics >= pp->data.physics )
 		{
 			pp = r;
 		}
-		if (r->data.chemistry >= pc->data.chemistry )
+		if (r->data.chemistry >= pch->data.chemistry )
 		{
 			pch = r;
 		}
-		if (r->data.biology >= pc->data.biology )
+		if (r->data.biology >= pb->data.biology )
 		{
 			pb = r;
 		}
-		if (r->data.total >= pc->data.total )
+		if (r->data.total >= pt->data.total )
 		{
 			pt = r;
 		}
