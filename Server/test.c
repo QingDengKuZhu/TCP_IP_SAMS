@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define PASSWORD	"PASSWORD"
+
+#define  PASSWORDPATH	"PASSWORD"
+#define	DATAPATH		"DATA"
 
 void Show(LINK * pL)
 {
@@ -85,7 +87,7 @@ void Save(LINK *pL)
 	FILE* fp;
 	NODE *p;
 	int count=0;
-	fp=fopen(PASSWORD,"wb");/*以只写方式打开二进制文件*/
+	fp=fopen(PASSWORDPATH,"wb");/*以只写方式打开二进制文件*/
 	
 	if(fp==NULL) /*打开文件失败*/
 	{

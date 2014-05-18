@@ -156,7 +156,6 @@ void DoWork(void)
 		/************************************************************************/
 		/* 第一阶段,接受一个客户端连接                                            */
 		/************************************************************************/
-		printf("测试\n");
 		hClientSocket = AccepctConnection(hListenSocket);
 		if (INVALID_SOCKET == hClientSocket)
 		{

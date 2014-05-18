@@ -196,8 +196,8 @@ void Student(SOCKET hClientSocket,const char account[])
 	{
 		printf("传输成功!\n");
 	}
-	//测试
-	CompleteRecv(hClientSocket, buffer, 1);//仅仅暂停,无用.
+	SaveData(pL);
+	DestroyList_s(&pL);
 	return;
 }
 
@@ -293,7 +293,7 @@ void Teacher(SOCKET hClientSocket)
 			p->pnext = NULL;
 			r->pnext = p;
 			r = p;
-//			++count;	/*文件记录加一*/
+			++count;	/*文件记录加一*/
 		}
 
 	}
@@ -301,15 +301,17 @@ void Teacher(SOCKET hClientSocket)
 	fclose(pf);/*关闭文件*/
 	
 //	Show_Data(pL);//测试
-//	printf("文件成功打开,当前记录共%d条\n", count);
+	printf("文件成功打开,当前记录共%d条\n", count);
 
 	
 	while (1)
 	{
-		if(CompleteRecv(hClientSocket, &select, 1) == 0);
+		if(CompleteRecv(hClientSocket, &select, 1) == 0)
 		{
+			printf("CompleRecv调用失败!\n");
 			break;
 		}
+		printf("接收指令:%c\n", select);
 		switch(select)
 		{
 		case 'a':	//将所有学生记录传送到客户端
@@ -371,6 +373,7 @@ void Teacher(SOCKET hClientSocket)
 	}
 
 	SaveData(pL);
+	DestroyList_s(&pL);
 }
 
 
@@ -380,7 +383,7 @@ void ServerToClient(SOCKET hClientSocket, LINK_S *pL)
 	char buffer[sizeof(STUDENT)];
 	STUDENT student;//传输的最后一个数据,ID为000000000'\0'
 	int i;
-
+	printf("调用ServerServerToClient\n");
 	for (i=0; i<9;++i)
 	{
 		student.ID[i] = '0';
@@ -667,6 +670,7 @@ void SaveData(LINK_S *pL)
 	FILE* fp;
 	NODE_S *p;
 	int count=0;
+	printf("保存数据!\n");
 	fp=fopen(DATAPATH,"wb");/*以只写方式打开二进制文件*/
 
 	if(fp==NULL) /*打开文件失败*/
@@ -675,7 +679,7 @@ void SaveData(LINK_S *pL)
 		getchar();
 		return ;
 	}
-
+	printf("打开成功!\n");	//测试
 	p=pL->pnext;
 
 	while(p)
@@ -684,6 +688,7 @@ void SaveData(LINK_S *pL)
 		{ 
 			p=p->pnext;
 			count++;
+			printf("i=%d, ", count);//测试
 		}
 		else
 		{
@@ -692,16 +697,13 @@ void SaveData(LINK_S *pL)
 	}
 	if(count>0)
 	{
-		getchar();
 		printf("\n\n\n\n\n=====>save file complete,total saved's record number is:%d\n",count);
-		getchar();
 	}
 	else
 	{
-		system("cls");
 		printf("the current LINK_S is empty,no password is saved!\n");
-		getchar();
 	}
+	printf("关闭文件!\n");
 	fclose(fp); /*关闭此文件*/
 
 	return;
