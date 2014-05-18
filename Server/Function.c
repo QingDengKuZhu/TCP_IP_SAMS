@@ -306,7 +306,10 @@ void Teacher(SOCKET hClientSocket)
 	
 	while (1)
 	{
-		CompleteRecv(hClientSocket, &select, 1);
+		if(CompleteRecv(hClientSocket, &select, 1) == 0);
+		{
+			break;
+		}
 		switch(select)
 		{
 		case 'a':	//将所有学生记录传送到客户端
@@ -366,7 +369,8 @@ void Teacher(SOCKET hClientSocket)
 			break;
 		}
 	}
-	//保存DATA
+
+	SaveData(pL);
 }
 
 
@@ -655,5 +659,50 @@ void Tongji(SOCKET hclientSocket, LINK_S *pL)
 	DataToBuffer(buffer, (const char *)&tjmessage, sizeof(TJMESSAGE)/sizeof(char));
 	CompleteSend(hclientSocket, buffer, sizeof(TJMESSAGE));
 	
+	return;
+}
+
+void SaveData(LINK_S *pL)
+{
+	FILE* fp;
+	NODE_S *p;
+	int count=0;
+	fp=fopen(DATAPATH,"wb");/*以只写方式打开二进制文件*/
+
+	if(fp==NULL) /*打开文件失败*/
+	{
+		printf("\n=====>文件打开错误!\n");
+		getchar();
+		return ;
+	}
+
+	p=pL->pnext;
+
+	while(p)
+	{
+		if(fwrite(p,sizeof(NODE_S),1,fp)==1)/*每次写一条记录或一个节点信息至文件*/
+		{ 
+			p=p->pnext;
+			count++;
+		}
+		else
+		{
+			break;
+		}
+	}
+	if(count>0)
+	{
+		getchar();
+		printf("\n\n\n\n\n=====>save file complete,total saved's record number is:%d\n",count);
+		getchar();
+	}
+	else
+	{
+		system("cls");
+		printf("the current LINK_S is empty,no password is saved!\n");
+		getchar();
+	}
+	fclose(fp); /*关闭此文件*/
+
 	return;
 }

@@ -144,23 +144,25 @@ void ClientFromServer(SOCKET sd)
 	char buffer[sizeof(STUDENT)];//接受学生成绩信息
 	STUDENT student;
 	char *studentend = "000000000";
-	int i = 0;
+//	int i = 0;
+	system("cls");
+	PrintHead();
 	while (1)
 	{
-		if(1==CompleteRecv(sd, buffer, sizeof(STUDENT)))
+		if(1 != CompleteRecv(sd, buffer, sizeof(STUDENT)))
 		{
-			++i;//		printf("接收成功!\n");
+//			++i;		printf("接收成功!\n");
 		}
 		BuffertoData((char *)&student, buffer, sizeof(STUDENT)/sizeof(char));//转换
 		if (0 == strcmp(student.ID, studentend))
 		{
 			break;
 		}
-		printf("调用PrintfData函数\n");
+//		printf("调用PrintfData函数\n");
 		PrintData(&student);
 
 	}
-	printf("接收了&d次\n", i);
+//	printf("接收了%d次\n", i);
 	getchar();
 	return;
 
@@ -233,10 +235,13 @@ void RecTongji(SOCKET sd)
 	char buffer[sizeof(TJMESSAGE)];
 	CompleteRecv(sd, buffer, sizeof(TJMESSAGE));
 	BuffertoData((char *)&tjmessage, buffer, sizeof(TJMESSAGE));
-	printf("语文不及格 %d 人;数学不及格 %d 人;外语不及格 %d 人;物理不及格 %d 人;化学不及格 %d 人;生物不及格 %d 人;\n",
-		tjmessage.chinese, tjmessage.math, tjmessage.english, tjmessage.physics, tjmessage.chemistry, tjmessage.biology);
-	
+	system("cls");
+	gotoxy(10, 8);
+	printf("------------------------统计信息-------------------------\n");
 	printf("总分最高为%d\n", tjmessage.total);
+
+	printf("语文不及格%d人.\n数学不及格%d人\n外语不及格%d人\n物理不及格%d人\n化学不及格%d人\n生物不及格%d人\n",
+		tjmessage.chinese, tjmessage.math, tjmessage.english, tjmessage.physics, tjmessage.chemistry, tjmessage.biology);
 	
 	printf("语文单科最高ID: %s, 姓名: %s\n", tjmessage.chinese_ID, tjmessage.chinese_name);
 	printf("数学单科最高ID: %s, 姓名: %s\n", tjmessage.math_ID, tjmessage.math_name);
@@ -245,6 +250,6 @@ void RecTongji(SOCKET sd)
 	printf("化学单科最高ID: %s, 姓名: %s\n", tjmessage.chemistry_ID, tjmessage.chemistry_name);
 	printf("生物单科最高ID: %s, 姓名: %s\n", tjmessage.biology_ID, tjmessage.biology_name);	
 	printf("总成绩分最高ID: %s, 姓名: %s\n", tjmessage.total_ID, tjmessage.total_name);
-	
+	getchar();
 	return;
 }

@@ -7,22 +7,23 @@
 void PrintHead(void)
 {
 	printf("      ----------------------------学生成绩----------------------------------  \n");
-	printf("     |    学号     |      姓名     | 语文|数学|  英语 |   物理  |  化学  |生物 |平均分| \n");
+	printf("     |  学号   |      姓名     |语文|数学|英语|物理|化学|生物|总分| \n");
 
 	return;
 }
 
 void PrintData(STUDENT *pdata)
-{
-	printf("ID : %s ", pdata->ID);
-	printf("name:%s ", pdata->name);
-	printf("chinese : %d ", pdata->chinese);
-	printf("math : %d ", pdata->math);
-	printf("english : %d ", pdata->english);
-	printf("physics : %d ", pdata->physics);
-	printf("chemistry : %d", pdata->chemistry);
-	printf("biology : %d", pdata->biology);
-	printf("total : %d", pdata->total);
+{	
+	printf("      ");
+	printf("%-10s ", pdata->ID);
+	printf("%-15s ", pdata->name);
+	printf("%-4d ", pdata->chinese);
+	printf("%-4d ", pdata->math);
+	printf("%-4d ", pdata->english);
+	printf("%-4d ", pdata->physics);
+	printf("%-4d", pdata->chemistry);
+	printf(" %-4d", pdata->biology);
+	printf(" %-4d", pdata->total);
 	printf("\n");
 	
 	return;

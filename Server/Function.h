@@ -34,4 +34,7 @@ int ModifyData(SOCKET hclientSocket, LINK_S *pL);
 int SortData(SOCKET hclientSocket, LINK_S *pL);
 
 void Tongji(SOCKET hclientSocket, LINK_S *pL);
+
+//保存数据
+void SaveData(LINK_S *pL);
 #endif

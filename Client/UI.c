@@ -62,11 +62,15 @@ void WelcomeUI(SOCKET sd)
 		getchar();
 		break;
 	case 'c'://密码错误
+		system("cls");
 		printf("密码错误！按回车返回欢迎界面\n");
+		getchar();
 		getchar();
 		break;
 	case 'd'://帐号不存在
+		system("cls");
 		printf("帐号密码不存在！按回车返回欢迎界面\n");
+		getchar();
 		getchar();
 		break;
 	}
@@ -80,13 +84,15 @@ void StudentUI(SOCKET sd)
 	STUDENT student;
 
 	system("cls");
-	printf("学生成绩管理系统--学生\n");
+	gotoxy(10, 5);			/*在文本窗口中设置光标*/
+	printf("		学生成绩管理系统--学生\n");
+
 	if(1==CompleteRecv(sd, buffer, sizeof(STUDENT)))
 	{
 //		printf("接收成功!\n");
 	}
 	BuffertoData((char *)&student, buffer, sizeof(STUDENT)/sizeof(char));//转换
-	//PrintHead();
+	PrintHead();
 	PrintData(&student);
 	
 	getchar();
@@ -98,10 +104,10 @@ void TeacherUI(SOCKET sd)
 	int select;
 	char send;
 	char rec;
-	Menu();
 
 	while (1)
 	{
+		Menu();
 		printf("请输入您的选择:");
 		scanf("%d", &select);
 
@@ -120,6 +126,7 @@ void TeacherUI(SOCKET sd)
 			{
 				printf("添加失败!\n");
 			}
+			getchar();
 			break;
 		case 2:
 			send = 'c';
@@ -134,11 +141,14 @@ void TeacherUI(SOCKET sd)
 			{
 				printf("删除失败!\n");
 			}
+			getchar();
+			getchar();
 			break;
-		case 3:
+		case 3:	//显示
 			send = 'a';
 			CompleteSend(sd, &send, 1);
 			ClientFromServer(sd);
+			getchar();
 			break;
 		case 4:
 			send = 'd';
@@ -153,6 +163,7 @@ void TeacherUI(SOCKET sd)
 			{
 				printf("修改失败!\n");
 			}
+			getchar();
 			break;
 		case 5:
 			send = 'f';
@@ -166,11 +177,14 @@ void TeacherUI(SOCKET sd)
 			{
 				printf("排序失败!\n");
 			}
+			getchar();
+			getchar();
 			break;
 		case 6:
 			send = 'g';
 			CompleteSend(sd, &send ,1);
 			RecTongji(sd);
+			getchar();
 		default:
 			break;;
 		}
@@ -190,7 +204,7 @@ void Menu(void)
 	gotoxy(10, 10);
 	printf("|	3 显示数据			4 修改数据	   |\n");
 	gotoxy(10, 11);
-	printf("|	5 按总成绩降序排列			6 统计数据	   |\n");
+	printf("|	5 按总成绩降序排列		6 统计数据	   |\n");
 	gotoxy(10, 14);
 	printf("-------------------------------------------------------------------\n");
 

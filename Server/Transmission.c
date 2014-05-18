@@ -156,10 +156,13 @@ void DoWork(void)
 		/************************************************************************/
 		/* 第一阶段,接受一个客户端连接                                            */
 		/************************************************************************/
+		printf("测试\n");
 		hClientSocket = AccepctConnection(hListenSocket);
 		if (INVALID_SOCKET == hClientSocket)
 		{
-			break;
+			printf("AccepctConnection失败\n");
+
+	//		break;
 		}
 
 		/************************************************************************/
@@ -167,7 +170,7 @@ void DoWork(void)
 		/************************************************************************/
 		if (-1 == ProcessConnection(hClientSocket))
 		{
-			break;
+			printf("ProcessConnection失败\n");
 		}
 
 		/************************************************************************/
@@ -175,7 +178,8 @@ void DoWork(void)
 		/************************************************************************/
 		if (-1 == ShutdownConnection(hClientSocket))
 		{
-			break;
+			printf("ShutdownConnection失败\n");
+	//		break;
 		}
 	}
 
