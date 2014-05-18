@@ -594,7 +594,7 @@ void Tongji(SOCKET hclientSocket, LINK_S *pL)
 		{
 			pc = r;
 		}
-		if (r->data.math >= pc->data.math )
+		if (r->data.math >= pm->data.math )
 		{
 			pm = r;
 		}
@@ -626,7 +626,7 @@ void Tongji(SOCKET hclientSocket, LINK_S *pL)
 	tjmessage.math = countm;
 	tjmessage.english =counte;
 	tjmessage.physics = countp;
-	tjmessage.chemistry = countp;
+	tjmessage.chemistry = countch;
 	tjmessage.biology = countb;
 
 	tjmessage.total = pt->data.total;
