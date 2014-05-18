@@ -90,17 +90,17 @@ int IsAccount(const char account[], const char password[])
 	{
 		if (0 == strcmp(p->data.account, account))
 		{
-			printf("帐号存在!\n");
+	//		printf("帐号存在!\n");
 			if (0 == strcmp(p->data.password, password))
 			{
-				printf("密码正确!\n");
+	//			printf("密码正确!\n");
 				n = p->data.Type;
 				DestroyList(&pL);
 				return n;
 			}
 			else
 			{
-				printf("密码错误!\n");
+	//			printf("密码错误!\n");
 				DestroyList(&pL);
 				return 3;
 			}
@@ -109,7 +109,7 @@ int IsAccount(const char account[], const char password[])
 		p = p->pnext;
 	}
 
-	printf("不存在帐号!\n");
+//	printf("不存在帐号!\n");
 	DestroyList(&pL);
 	return 4;
 }
@@ -194,7 +194,7 @@ void Student(SOCKET hClientSocket,const char account[])
 
 	if(1 == CompleteSend(hClientSocket, buffer, sizeof(STUDENT)))
 	{
-		printf("传输成功!\n");
+//		printf("传输成功!\n");
 	}
 	SaveData(pL);
 	DestroyList_s(&pL);
@@ -239,7 +239,7 @@ void Teacher(SOCKET hClientSocket)
 {
 	LINK_S *pL = NULL;		/*单链表头指针*/	
 	FILE *pf = NULL;			/*文件指针*/
-	int count = 0;			/*保存文件中的学生条数*/
+//	int count = 0;			/*保存文件中的学生条数*/
 	NODE_S *p = NULL;			/*结点指针*/
 	NODE_S *r = NULL;			/*指向尾结点,若链表为空,则等于头指针*/
 //	char buffer[sizeof(STUDENT)];//存储待发送学生数据.
@@ -293,7 +293,7 @@ void Teacher(SOCKET hClientSocket)
 			p->pnext = NULL;
 			r->pnext = p;
 			r = p;
-			++count;	/*文件记录加一*/
+//			++count;	/*文件记录加一*/
 		}
 
 	}
@@ -301,17 +301,17 @@ void Teacher(SOCKET hClientSocket)
 	fclose(pf);/*关闭文件*/
 	
 //	Show_Data(pL);//测试
-	printf("文件成功打开,当前记录共%d条\n", count);
+//	printf("文件成功打开,当前记录共%d条\n", count);
 
 	
 	while (1)
 	{
 		if(CompleteRecv(hClientSocket, &select, 1) == 0)
 		{
-			printf("CompleRecv调用失败!\n");
+//			printf("CompleRecv调用失败!\n");
 			break;
 		}
-		printf("接收指令:%c\n", select);
+//		printf("接收指令:%c\n", select);
 		switch(select)
 		{
 		case 'a':	//将所有学生记录传送到客户端
@@ -383,7 +383,7 @@ void ServerToClient(SOCKET hClientSocket, LINK_S *pL)
 	char buffer[sizeof(STUDENT)];
 	STUDENT student;//传输的最后一个数据,ID为000000000'\0'
 	int i;
-	printf("调用ServerServerToClient\n");
+//	printf("调用ServerServerToClient\n");
 	for (i=0; i<9;++i)
 	{
 		student.ID[i] = '0';
@@ -669,8 +669,8 @@ void SaveData(LINK_S *pL)
 {
 	FILE* fp;
 	NODE_S *p;
-	int count=0;
-	printf("保存数据!\n");
+//	int count=0;
+//	printf("保存数据!\n");
 	fp=fopen(DATAPATH,"wb");/*以只写方式打开二进制文件*/
 
 	if(fp==NULL) /*打开文件失败*/
@@ -679,7 +679,7 @@ void SaveData(LINK_S *pL)
 		getchar();
 		return ;
 	}
-	printf("打开成功!\n");	//测试
+//	printf("打开成功!\n");	//测试
 	p=pL->pnext;
 
 	while(p)
@@ -687,23 +687,23 @@ void SaveData(LINK_S *pL)
 		if(fwrite(p,sizeof(NODE_S),1,fp)==1)/*每次写一条记录或一个节点信息至文件*/
 		{ 
 			p=p->pnext;
-			count++;
-			printf("i=%d, ", count);//测试
+//			count++;
+//			printf("i=%d, ", count);//测试
 		}
 		else
 		{
 			break;
 		}
 	}
-	if(count>0)
-	{
-		printf("\n\n\n\n\n=====>save file complete,total saved's record number is:%d\n",count);
-	}
-	else
-	{
-		printf("the current LINK_S is empty,no password is saved!\n");
-	}
-	printf("关闭文件!\n");
+//	if(count>0)
+//	{
+//		printf("\n\n\n\n\n=====>save file complete,total saved's record number is:%d\n",count);
+//	}
+//	else
+//	{
+//		printf("the current LINK_S is empty,no password is saved!\n");
+//	}
+//	printf("关闭文件!\n");
 	fclose(fp); /*关闭此文件*/
 
 	return;

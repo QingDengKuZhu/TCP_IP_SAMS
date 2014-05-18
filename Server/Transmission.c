@@ -177,7 +177,7 @@ void DoWork(void)
 		/************************************************************************/
 		if (-1 == ShutdownConnection(hClientSocket))
 		{
-			printf("ShutdownConnection失败\n");
+	//		printf("ShutdownConnection失败\n");
 	//		break;
 		}
 	}
