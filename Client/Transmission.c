@@ -226,3 +226,25 @@ void Modify(SOCKET sd)
 	return;
 
 }
+
+void RecTongji(SOCKET sd)
+{
+	TJMESSAGE tjmessage;
+	char buffer[sizeof(TJMESSAGE)];
+	CompleteRecv(sd, buffer, sizeof(TJMESSAGE));
+	BuffertoData((char *)&tjmessage, buffer, sizeof(TJMESSAGE));
+	printf("语文不及格 %d 人;数学不及格 %d 人;外语不及格 %d 人;物理不及格 %d 人;化学不及格 %d 人;生物不及格 %d 人;\n",
+		tjmessage.chinese, tjmessage.math, tjmessage.english, tjmessage.physics, tjmessage.chemistry, tjmessage.biology);
+	
+	printf("总分最高为%d\n", tjmessage.total);
+	
+	printf("语文单科最高ID: %s, 姓名: %s\n", tjmessage.chinese_ID, tjmessage.chinese_name);
+	printf("数学单科最高ID: %s, 姓名: %s\n", tjmessage.math_ID, tjmessage.math_name);
+	printf("外语单科最高ID: %s, 姓名: %s\n", tjmessage.english_ID, tjmessage.english_name);
+	printf("物理单科最高ID: %s, 姓名: %s\n", tjmessage.physics_ID, tjmessage.physics_name);
+	printf("化学单科最高ID: %s, 姓名: %s\n", tjmessage.chemistry_ID, tjmessage.chemistry_name);
+	printf("生物单科最高ID: %s, 姓名: %s\n", tjmessage.biology_ID, tjmessage.biology_name);	
+	printf("总成绩分最高ID: %s, 姓名: %s\n", tjmessage.total_ID, tjmessage.total_name);
+	
+	return;
+}

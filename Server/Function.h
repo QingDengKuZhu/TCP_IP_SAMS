@@ -29,4 +29,9 @@ int DelData(SOCKET hclientSocket, LINK_S *pL);
 
 //修改成绩记录
 int ModifyData(SOCKET hclientSocket, LINK_S *pL);
+
+//将成绩按照总分降序排列
+int SortData(SOCKET hclientSocket, LINK_S *pL);
+
+void Tongji(SOCKET hclientSocket, LINK_S *pL);
 #endif

@@ -36,6 +36,37 @@ typedef struct Account
 	char password[PASSWORD_LEN];
 }ACCOUNT;
 
+typedef struct tjMessage 
+{
+	unsigned int chinese;	//语文不及格人数
+	unsigned int math;	//数学不及格人数
+	unsigned int english;	//英语不及格人数
+	unsigned int physics;	//物理不及格人数
+	unsigned int chemistry;//化学不及格人数
+	unsigned int biology;	//生物不及格人数
+
+	unsigned int total;	//总分最高分
+	
+	char chinese_ID[10];
+	char chinese_name[15];		
+	
+	//相关成绩最高的学生ID和姓名
+	char math_ID[10];
+	char math_name[15];		
+	
+	char english_ID[10];
+	char english_name[15];		
+	
+	char physics_ID[10];
+	char physics_name[15];
+
+	char chemistry_ID[10];
+	char chemistry_name[15];		
+	char biology_ID[10];
+	char biology_name[15];		
+	char total_ID[10];
+	char total_name[15];		
+}TJMESSAGE;
 /*
 **链表结构
 */

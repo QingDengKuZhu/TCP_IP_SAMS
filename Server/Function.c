@@ -349,9 +349,19 @@ void Teacher(SOCKET hClientSocket)
 		case 'e':
 			//按学号查询学生记录
 			break;
-		case 'f':
-			//将学生记录降序排列
+		case 'f'://降序排列
+			if(SortData(hClientSocket, pL) == 1)
+			{
+				rec = 'Y';
+			}
+			else
+			{
+				rec = 'N';
+			}
+			CompleteSend(hClientSocket, &rec, 1);			
 			break;
+		case 'g':	//统计
+			Tongji(hClientSocket, pL);
 		default:
 			break;
 		}
@@ -467,4 +477,183 @@ int ModifyData(SOCKET hclientSocket, LINK_S *pL)
 
 	free(pNew);
 	return 0;	
+}
+
+int SortData(SOCKET hclientSocket, LINK_S *pL)
+{
+	NODE_S *ll;
+	NODE_S *p;
+	NODE_S *rr;
+	NODE_S *s;
+//	int i=0;
+	if(pL->pnext==NULL)
+	{
+		return 0;
+	}
+
+	ll=(NODE_S *)malloc(sizeof(NODE_S)); /*用于创建新的节点*/
+	if(!ll)
+	{
+		return 0;           
+	}
+	ll->pnext=NULL;
+
+	p=pL->pnext;
+	while(p) /*p!=NULL*/
+	{
+		s=(NODE_S *)malloc(sizeof(NODE_S)); /*新建节点用于保存从原链表中取出的节点信息*/
+		if(!s) /*s==NULL*/
+		{
+			return 0;             /*返回主界面*/
+		}
+		s->data=p->data; /*填数据域*/
+		s->pnext=NULL;    /*指针域为空*/
+		rr=ll;
+		/*rr链表于存储插入单个节点后保持排序的链表，ll是这个链表的头指针,每次从头开始查找插入位置*/
+
+		while(rr->pnext!=NULL && rr->pnext->data.total>=p->data.total)
+		{
+			rr=rr->pnext;/*指针移至总分比p所指的节点的总分小的节点位置*/
+		} 
+		if(rr->pnext==NULL)/*若新链表ll中的所有节点的总分值都比p->data.total大时，就将p所指节点加入链表尾部*/
+		{
+			rr->pnext=s;
+		}
+		else /*否则将该节点插入至第一个总分字段比它小的节点的前面*/
+		{
+			s->pnext=rr->pnext;
+			rr->pnext=s;
+		}
+		p=p->pnext; /*原链表中的指针下移一个节点*/
+	}
+
+	pL->pnext=ll->pnext; /*ll中存储是的已排序的链表的头指针*/
+	p=pL->pnext;           /*已排好序的头指针赋给p，准备填写名次*/
+	while(p!=NULL)  /*当p不为空时，进行下列操作*/
+	{
+//		i++;       /*结点序号*/
+		p=p->pnext;   /*指针后移*/
+
+	}
+
+
+	return 1;	
+}
+
+void Tongji(SOCKET hclientSocket, LINK_S *pL)
+{
+	NODE_S *pc;		/*指向语文成绩最高的结点*/
+	NODE_S *pm;		/*指向数学成绩最高的结点*/
+	NODE_S *pe;		/*指向外语成绩最高的结点*/
+	NODE_S *pp;		/*指向物理成绩最高的结点*/
+	NODE_S *pch;		/*指向化学成绩最高的结点*/
+	NODE_S *pb;		/*指向生物成绩最高的结点*/
+	NODE_S *pt;		/*指向总成绩最高的结点*/
+	
+	NODE_S *r = pL->pnext;
+
+	int countc = 0;	/*语文不及格数*/
+	int countm = 0;	/*数学不及格数*/
+	int counte = 0;	/*外语不及格数*/
+	int countp = 0;	/*物理不及格数*/
+	int countch = 0;	/*化学不及格数*/
+	int countb = 0;	/*生物不及格数*/
+	
+	TJMESSAGE tjmessage;//统计信息
+	char buffer[sizeof(TJMESSAGE)];//待发送缓冲区
+	
+	pc = pm = pe = pp = pch = pb = r;
+	while (r)
+	{
+		if (r->data.chinese < 60)
+		{
+			countc++;
+		}
+		if (r->data.math < 60)
+		{
+			countm++;
+		}
+		if (r->data.english < 60)
+		{
+			counte++;
+		}
+		if (r->data.physics < 60)
+		{
+			countp++;
+		}
+		if (r->data.chemistry < 60)
+		{
+			countch++;
+		}
+		if (r->data.biology < 60)
+		{
+			countb++;
+		}
+
+		if (r->data.chinese >= pc->data.chinese )
+		{
+			pc = r;
+		}
+		if (r->data.math >= pc->data.math )
+		{
+			pm = r;
+		}
+		if (r->data.english >= pc->data.english )
+		{
+			pe = r;
+		}
+		if (r->data.physics >= pc->data.physics )
+		{
+			pp = r;
+		}
+		if (r->data.chemistry >= pc->data.chemistry )
+		{
+			pch = r;
+		}
+		if (r->data.biology >= pc->data.biology )
+		{
+			pb = r;
+		}
+		if (r->data.total >= pc->data.total )
+		{
+			pt = r;
+		}
+
+		r = r->pnext;
+	}
+	
+	tjmessage.chinese = countc;
+	tjmessage.math = countm;
+	tjmessage.english =counte;
+	tjmessage.physics = countp;
+	tjmessage.chemistry = countp;
+	tjmessage.biology = countb;
+
+	tjmessage.total = pt->data.total;
+
+	strcpy(tjmessage.chinese_ID, pc->data.ID);
+	strcpy(tjmessage.chinese_name, pc->data.name);
+
+	strcpy(tjmessage.math_ID, pm->data.ID);
+	strcpy(tjmessage.math_name, pm->data.name);
+
+	strcpy(tjmessage.english_ID, pe->data.ID);
+	strcpy(tjmessage.english_name, pe->data.name);
+
+	strcpy(tjmessage.physics_ID, pp->data.ID);
+	strcpy(tjmessage.physics_name, pp->data.name);
+
+	strcpy(tjmessage.chemistry_ID, pch->data.ID);
+	strcpy(tjmessage.chemistry_name, pch->data.name);
+
+	strcpy(tjmessage.biology_ID, pb->data.ID);
+	strcpy(tjmessage.biology_name, pb->data.name);
+
+	strcpy(tjmessage.total_ID, pt->data.ID);
+	strcpy(tjmessage.total_name, pt->data.name);
+
+	DataToBuffer(buffer, (const char *)&tjmessage, sizeof(TJMESSAGE)/sizeof(char));
+	CompleteSend(hclientSocket, buffer, sizeof(TJMESSAGE));
+	
+	return;
 }

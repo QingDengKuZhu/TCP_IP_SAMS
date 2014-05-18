@@ -153,6 +153,24 @@ void TeacherUI(SOCKET sd)
 			{
 				printf("修改失败!\n");
 			}
+			break;
+		case 5:
+			send = 'f';
+			CompleteSend(sd, &send ,1);
+			CompleteRecv(sd, &rec, 1);
+			if (rec =='Y')
+			{
+				printf("排序成功\n");
+			}
+			else
+			{
+				printf("排序失败!\n");
+			}
+			break;
+		case 6:
+			send = 'g';
+			CompleteSend(sd, &send ,1);
+			RecTongji(sd);
 		default:
 			break;;
 		}
