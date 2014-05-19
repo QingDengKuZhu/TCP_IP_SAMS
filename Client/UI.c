@@ -185,6 +185,14 @@ void TeacherUI(SOCKET sd)
 			CompleteSend(sd, &send ,1);
 			RecTongji(sd);
 			getchar();
+			break;
+		case 7:
+			send = 'h';
+			CompleteSend(sd, &send, 1);
+			Found(sd);
+			ClientFromServer(sd);
+			getchar();
+			break;
 		default:
 			break;;
 		}
@@ -205,7 +213,9 @@ void Menu(void)
 	printf("|	3 显示数据			4 修改数据	   |\n");
 	gotoxy(10, 11);
 	printf("|	5 按总成绩降序排列		6 统计数据	   |\n");
-	gotoxy(10, 14);
+	gotoxy(10, 12);
+	printf("|	7 查找数据	  		     	           |\n");
+	gotoxy(10, 13);
 	printf("-------------------------------------------------------------------\n");
 
 	return;

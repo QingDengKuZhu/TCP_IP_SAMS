@@ -79,7 +79,6 @@ void IDInput(char ID[], const char notice[], const size_t len)
 	return;
 }
 
-
 int IsDigit(const char *str, const size_t len)
 {
 	unsigned int i;
@@ -93,7 +92,7 @@ int IsDigit(const char *str, const size_t len)
 	return 1;
 }
 
-void NameInput(char account[], const char notice[], const size_t maxlen)
+void NameInput(char name[], const char notice[], const size_t maxlen)
 {
 	char t[256];
 	do 
@@ -106,5 +105,5 @@ void NameInput(char account[], const char notice[], const size_t maxlen)
 		}
 	} while (strlen(t) > maxlen-1);
 
-	strcpy(account, t);//该操作执行完成后,account[len-1] = '\0'
+	strcpy(name, t);//该操作执行完成后,account[len-1] = '\0'
 }

@@ -49,4 +49,6 @@ void Del(SOCKET sd);
 void Modify(SOCKET sd);
 
 void RecTongji(SOCKET sd);
+
+void Found(SOCKET sd);
 #endif

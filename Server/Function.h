@@ -37,4 +37,8 @@ void Tongji(SOCKET hclientSocket, LINK_S *pL);
 
 //保存数据
 void SaveData(LINK_S *pL);
+
+//查找数据
+NODE_S *FounddData(SOCKET hclientSocket, LINK_S *pL);
+
 #endif

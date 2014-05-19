@@ -367,6 +367,48 @@ void Teacher(SOCKET hClientSocket)
 			break;
 		case 'g':	//统计
 			Tongji(hClientSocket, pL);
+			break;
+		case 'h':
+		{		
+			STUDENT student;//传输的最后一个数据,ID为000000000'\0'
+			STUDENT student2;
+			char buffer[sizeof(STUDENT)];
+			int i;
+
+			for (i=0; i<9;++i)
+			{
+				student.ID[i] = '0';
+				student2.ID[i] = '0';
+			}
+			student.ID[9] = '\0';
+			student2.ID[9] = '\0';
+
+			r =FounddData(hClientSocket, pL); 
+			if(r)
+			{
+				strcpy(student.ID, r->data.ID);
+				strcpy(student.name, r->data.name);
+				student.chinese = r->data.chinese;
+				student.math = r->data.math;
+				student.english = r->data.english;
+				student.physics = r->data.physics;
+				student.chemistry = r->data.chemistry;
+				student.biology = r->data.biology;
+				student.total = r->data.total;
+				DataToBuffer(buffer, (const char *)&student, sizeof(STUDENT)/sizeof(char));
+				CompleteSend(hClientSocket, buffer, sizeof(STUDENT));
+				DataToBuffer(buffer, (const char *)&student2, sizeof(STUDENT)/sizeof(char));
+				CompleteSend(hClientSocket, buffer, sizeof(STUDENT));
+
+			}
+			else
+			{
+				DataToBuffer(buffer, (const char *)&student, sizeof(STUDENT)/sizeof(char));
+				CompleteSend(hClientSocket, buffer, sizeof(STUDENT));
+			}
+
+			break;
+		}
 		default:
 			break;
 		}
@@ -375,7 +417,6 @@ void Teacher(SOCKET hClientSocket)
 	SaveData(pL);
 	DestroyList_s(&pL);
 }
-
 
 void ServerToClient(SOCKET hClientSocket, LINK_S *pL)
 {
@@ -707,4 +748,23 @@ void SaveData(LINK_S *pL)
 	fclose(fp); /*关闭此文件*/
 
 	return;
+}
+
+NODE_S *FounddData(SOCKET hclientSocket, LINK_S *pL)
+{
+	NODE_S *p = pL->pnext;
+	char ID[10];//保存待查寻ID号.
+	CompleteRecv(hclientSocket, ID, 10);
+//	printf("ID: %s\n", ID);//测试,接收到的ID号
+	while (p)
+	{
+		if(0==strcmp(ID, p->data.ID))
+		{
+			return p;
+		}
+
+		p = p->pnext;
+	}
+
+	return NULL;
 }

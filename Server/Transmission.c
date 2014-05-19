@@ -149,13 +149,13 @@ void DoWork(void)
 		return;
 	}
 	
-	printf("Server is Running...\n");
 
 	while (1)
 	{
 		/************************************************************************/
 		/* 第一阶段,接受一个客户端连接                                            */
 		/************************************************************************/
+		printf("Server is Running...\n");
 		hClientSocket = AccepctConnection(hListenSocket);
 		if (INVALID_SOCKET == hClientSocket)
 		{

@@ -253,3 +253,15 @@ void RecTongji(SOCKET sd)
 	getchar();
 	return;
 }
+
+void Found(SOCKET sd)
+{
+	char ID[10];
+	IDInput(ID, "查找ID:", 10);
+	if(0 == CompleteSend(sd, ID, 10))
+	{
+		printf("传输失败!\n");
+	}
+
+	return;
+}

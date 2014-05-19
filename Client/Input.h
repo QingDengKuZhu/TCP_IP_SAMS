@@ -19,5 +19,5 @@ void IDInput(char ID[], const char notice[], const size_t len);
 int IsDigit(const char *str, const size_t len);
 
 //名字长度最大为maxlen;
-void NameInput(char account[], const char notice[], const size_t maxlen);
+void NameInput(char name[], const char notice[], const size_t maxlen);
 #endif
